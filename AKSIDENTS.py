@@ -2,14 +2,20 @@ import folium
 import pandas as pd
 import os
 import csv
-import collections
+import matplotlib
+import matplotlib.pyplot as plt
+#matplotlib.use('TkAgg')
+import array
+from collections import Counter
 
-
+df = pd.DataFrame({'Year':['1986', '1987', '1988','1989', '1990', '1991','1992', '1993', '1994', '1995', '1996','1997', '1998', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009'], 'Accidents':[1, 1, 30, 39, 83, 30, 92, 134, 193, 224, 231, 315, 264, 1024, 1817, 2203, 1873, 1330, 1259, 1419, 1209, 937, 200, 1]})
+ax = df.plot.bar(x='Year', y='Accidents', rot=0)
 dataframe = pd.read_csv("saferparks_dataset.csv")
-
+y = {}
 d = {}
 q = {}
 z = {}
+w = {}
 #print(    (dataframe[""]   )    )
 
 #state_geo = os.path.join('us-states.json')
@@ -45,14 +51,71 @@ with open('saferparks_dataset.csv') as f:
             d[row[2]] += 1
        else:
            d[row[2]] = 1
+
 print (d)
+total=0
+for key in d:
+    total += d[key]
+column=["Year","Accidents"]
+
+
+
+
+
+print (y)
+total=0
+for key in y:
+    total += y[key]
+
+
+
+
+
+
+
+
+data = pd.read_csv('saferparks_dataset.csv')
+data.dropna()
+yeardata = data["Date"]
+yeardata = pd.to_datetime(yeardata)
+yeardata = yeardata.dt.year
+data["Date"] = yeardata
+print(yeardata)
+
+
+with open('saferparks_dataset.csv') as f:
+   writer = csv.writer(f)
+   rows = csv.reader(f)
+   lines = f.readlines()[1:]
+   #for row in rows:
+
+
+
+data.hist(column='Date')
+
+#matplotlib.pyplot.savefig('myfilename.png')
+##UNCOMMENT THHIS LATTERER
+plt.show()
+
+
+
+
+# with open('saferparks_dataset.csv') as f:
+#    writer = csv.writer(f)
+#    rows = csv.reader(f)
+#    for row in rows:
+#        year = str(w[row[1]]).split("-")
+#        if year[2] in d:
+#
+#             w[year[2]] += 1
+#        else:
+#
+#             w[year[2]] = 1
+
+#print (w)
 the_map = None
 
 
-
-total = 0
-for key in d:
-    total += d[key]
 
 
 
@@ -65,7 +128,7 @@ with open(csv_file, 'w') as csvfile:
     for key, value in d.items():
         if key == "state":
             continue
-        lst = [key,value/total*100]
+        lst = [key,value/14921*100]
         writer.writerow(lst)
 
 state_geo = os.path.join('us-states.json')
@@ -190,8 +253,10 @@ folium.Marker([43.804133,-120.554201], popup='<i>0 accidents,0% of all accidents
 folium.Marker([35.517491,-86.580447], popup='<i>1 accident,0.007% of all accidents</i>', tooltip=tooltip22).add_to(m)
 folium.Marker([27.664827,-81.515754], popup='<i>1074 accidents,7.2% of all accidents</i>', tooltip=tooltip).add_to(m)
 
-
 m.save('index.html')
+d=input("You Good Bro?")
+
+
 
 
 
